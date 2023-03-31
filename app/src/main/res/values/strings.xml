@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Video Games App</string>
+    <string name="recycler_view">Recycler View</string>
+    <string-array name="states">
+        <item>Konami</item>
+        <item>Square Enix</item>
+        <item>Nintendo</item>
+        <item>Valve</item>
+        <item>Besthesda</item>
+        <item>Sega</item>
+        <item>Epic Games</item>
+        <item>Activistion</item>
+        <item>EA</item>
+    </string-array>
+</resources>

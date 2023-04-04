@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     TextView companyView;
     RecyclerView recycle;
     public String[] getNames;
-    public String[] getCompany;
+    public String[] getPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 control.open();
-                String state = control.getState(nameEdit.getText().toString());
-                String secondState = control.getState(priceEdit.getText().toString());
+                String company = control.getCompany(nameEdit.getText().toString());
+                String secondCompany = control.getCompany(priceEdit.getText().toString());
                 control.close();
-                resultView.setText(state);
-                companyView.setText(secondState);
+                resultView.setText(company);
+                companyView.setText(secondCompany);
             }
         });
 
@@ -83,11 +83,12 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         recycle.setLayoutManager(new LinearLayoutManager(this));
         control.open();
-        getNames = control.getState(nameEdit.getText().toString());
-        getCompany = control.getState(priceEdit.getText().toString());
+        getNames = control.getAllNamesArray(nameEdit.getText().toString());
+        getPrice = control.getAllPricesArray(priceEdit.getText().toString());
         control.close();
-        resultView.setText(getNames);
-        companyView.setText(getCompany);
-        recycle.setAdapter(new CustomAdapter(getNames, getCompany));
+        //resultView.setText(getNames);
+        //companyView.setText(getCompany);
+        recycle.setAdapter(new CustomAdapter(getNames));
+
     }
 }

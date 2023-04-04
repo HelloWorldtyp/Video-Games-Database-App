@@ -23,24 +23,40 @@ public class DatabaseControl {
         helper.close();
     }
 
-    public boolean insert(String name, String state){
+    public boolean insert(String name, String company){
         ContentValues values = new ContentValues();
         values.put("name", name);
-        values.put("state", state);
-        return database.insert("contact", null, values) > 0;
+        values.put("company", company);
+        return database.insert("games", null, values) > 0;
     }
 
-    public String getState(String name){
-        String query = "select state from contact where name=\""+name+"\"";
+
+    public String getCompany(String name){
+        String query = "select state from games where name=\""+name+"\"";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
-        String state = cursor.getString(0);
+        String company = cursor.getString(0);
         cursor.close();
-        return state;
+        return company;
     }
 
-    public String[] getAllNamesArray(){
-        String query = "select name from contact";
+    public String[] getAllNamesArray(String s){
+        String query = "select name from games";
+        Cursor cursor = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        ArrayList<String> list = new ArrayList<String>();
+        while(!cursor.isAfterLast()){
+            String name = cursor.getString(0);
+            list.add(name);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        String[] array = new String[list.size()];
+        return list.toArray(array);
+    }
+
+    public String[] getAllPricesArray(String s){
+        String query = "select company from games";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         ArrayList<String> list = new ArrayList<String>();
@@ -55,7 +71,7 @@ public class DatabaseControl {
     }
 
     public ArrayList<String> getAllNames(){
-        String query = "select name from contact";
+        String query = "select name from games";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         ArrayList<String> list = new ArrayList<String>();

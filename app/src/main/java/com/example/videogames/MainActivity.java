@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner;
     Button addButton;
     Button getButton;
+    Button deleteButton;
     DatabaseControl control;
     TextView resultView;
     TextView companyView;
@@ -40,16 +41,27 @@ public class MainActivity extends AppCompatActivity {
         resultView = findViewById(R.id.resultView);
         recycle = findViewById(R.id.recycle);
         companyView = findViewById(R.id.companyResult);
+        deleteButton = findViewById(R.id.deleteButton);
 
         getButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 control.open();
-                String company = control.getCompany(nameEdit.getText().toString());
+                String company = nameEdit.getText().toString();
                 String secondCompany = control.getCompany(priceEdit.getText().toString());
                 control.close();
                 resultView.setText(company);
                 companyView.setText(secondCompany);
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = nameEdit.getText().toString();
+                control.open();
+                control.delete(name);
+                control.close();
             }
         });
 
@@ -58,15 +70,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name = nameEdit.getText().toString();
                 String price = priceEdit.getText().toString();
-                String company = ((TextView) spinner.getSelectedItem()).getText().toString();
+                String company = (String) spinner.getSelectedItem(); //((TextView) spinner.getSelectedItem()).getText().toString();
                 control.open();
                 boolean itWorked = control.insert(name, company);
                 boolean itStillWorked = control.insert(price, company);
                 control.close();
                 if(itWorked && itStillWorked){
-                    Toast.makeText(getApplicationContext(), "Added "+name+" "+price+" "+company, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Added "+name+" "+company+" "+price, Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getApplicationContext(), "FAILED "+name+" "+price+" "+company, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "FAILED "+name+" "+company+" "+price, Toast.LENGTH_SHORT).show();
                 }
             }
         });

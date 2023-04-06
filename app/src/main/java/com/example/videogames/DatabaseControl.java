@@ -30,9 +30,13 @@ public class DatabaseControl {
         return database.insert("games", null, values) > 0;
     }
 
+    public void delete(String name){
+        database.delete("games", "name=\""+name+"\"", null);
+    }
+
 
     public String getCompany(String name){
-        String query = "select state from games where name=\""+name+"\"";
+        String query = "select company from games where name=\""+name+"\"";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();
         String company = cursor.getString(0);

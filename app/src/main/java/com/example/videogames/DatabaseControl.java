@@ -44,7 +44,7 @@ public class DatabaseControl {
         return company;
     }
 
-    public String[] getAllNamesArray(String s){
+    public String[] getAllNamesArray(){
         String query = "select name from games";
         Cursor cursor = database.rawQuery(query, null);
         cursor.moveToFirst();

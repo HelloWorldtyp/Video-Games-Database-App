@@ -48,10 +48,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 control.open();
                 String company = nameEdit.getText().toString();
-                String secondCompany = control.getCompany(priceEdit.getText().toString());
                 control.close();
                 resultView.setText(company);
-                companyView.setText(secondCompany);
             }
         });
 
@@ -95,12 +93,23 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         recycle.setLayoutManager(new LinearLayoutManager(this));
         control.open();
-        getNames = control.getAllNamesArray(nameEdit.getText().toString());
-        getPrice = control.getAllPricesArray(priceEdit.getText().toString());
+        getNames = control.getAllNamesArray();
         control.close();
-        //resultView.setText(getNames);
-        //companyView.setText(getCompany);
-        recycle.setAdapter(new CustomAdapter(getNames));
+        CustomAdapter adapter = new CustomAdapter(getNames);
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomAdapter.ViewHolder viewHolder = (CustomAdapter.ViewHolder) view.getTag();
+                TextView textView = viewHolder.getTextView();
+                String name = textView.getText().toString();
+                control.open();
+                String company = control.getCompany(name);
+                control.close();
+                resultView.setText(name+": "+company);
+            }
+        });
+        recycle.setAdapter(adapter);
+        Toast.makeText(this,adapter.getItemCount()+ "", Toast.LENGTH_SHORT).show();
 
     }
 }

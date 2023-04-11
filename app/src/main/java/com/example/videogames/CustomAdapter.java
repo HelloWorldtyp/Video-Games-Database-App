@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
     public String[] localDataset;
+    View.OnClickListener listener;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
 
         public ViewHolder(View view) {
@@ -19,6 +20,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             // Define click listener for the ViewHolder's View
 
             textView = (TextView) view.findViewById(R.id.textView);
+            textView.setOnClickListener(listener);
+            textView.setTag(this);
         }
 
         public TextView getTextView() {
@@ -30,6 +33,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         localDataset = dataSet;
     }
 
+    public void setOnClickListener(View.OnClickListener listenThingie){
+        listener = listenThingie;
+    }
 
     @NonNull
     @Override

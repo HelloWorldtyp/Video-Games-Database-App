@@ -44,6 +44,15 @@ public class DatabaseControl {
         return company;
     }
 
+    public String getPrice(String name){
+        String query = "select price from games where name=\""+name+"\"";
+        Cursor cursor = database.rawQuery(query, null);
+        cursor.moveToFirst();
+        String company = cursor.getString(0);
+        cursor.close();
+        return company;
+    }
+
     public String[] getAllNamesArray(){
         String query = "select name from games";
         Cursor cursor = database.rawQuery(query, null);

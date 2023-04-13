@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner;
     Button addButton;
     Button getButton;
+    Button getPriceButton;
     Button deleteButton;
     DatabaseControl control;
     TextView resultView;
@@ -42,14 +43,25 @@ public class MainActivity extends AppCompatActivity {
         recycle = findViewById(R.id.recycle);
         companyView = findViewById(R.id.companyResult);
         deleteButton = findViewById(R.id.deleteButton);
+        getPriceButton = findViewById(R.id.getPriceButton);
 
         getButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 control.open();
-                String company = nameEdit.getText().toString();
+                String company = spinner.getSelectedItem().toString();
                 control.close();
                 resultView.setText(company);
+            }
+        });
+
+        getPriceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                control.open();
+                String price = priceEdit.getText().toString();
+                control.close();
+                resultView.setText(price);
             }
         });
 
@@ -104,8 +116,10 @@ public class MainActivity extends AppCompatActivity {
                 String name = textView.getText().toString();
                 control.open();
                 String company = control.getCompany(name);
+                String price = control.getPrice(name);
                 control.close();
                 resultView.setText(name+": "+company);
+                resultView.setText(name+": "+price);
             }
         });
         recycle.setAdapter(adapter);
